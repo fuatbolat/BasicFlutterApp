@@ -1,19 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:restoran_app/views/activeordercreen.dart';
 import '../model/basket.dart';
 
 
-
-
-
-/*AppBar Stili: Başlık metin boyutu ve kalınlığı artırıldı, AppBar rengi değiştirildi.
-Padding Eklendi: Genel görünümü iyileştirmek için Padding eklendi.
-Card Widget: Ürünleri göstermek için Card widget kullanıldı.
-RoundedRectangleBorder: Kartlara köşe yuvarlaması eklendi.
-Elevation: Kartların gölgeli görünmesi sağlandı.
-IconButton Renkleri: İkon butonları renklendirildi.
-*/ 
 
 class BasketScreen extends StatefulWidget {
   final Basket basket;
@@ -29,7 +18,8 @@ class _BasketScreenState extends State<BasketScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sepet', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        title: Text('Sepet',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
         backgroundColor: Color.fromARGB(255, 211, 123, 245),
       ),
       body: Padding(
@@ -47,7 +37,8 @@ class _BasketScreenState extends State<BasketScreen> {
                 itemCount: widget.basket.items.length,
                 itemBuilder: (context, index) {
                   String itemName = widget.basket.items.keys.elementAt(index);
-                  int itemQuantity = widget.basket.items.values.elementAt(index);
+                  int itemQuantity =
+                      widget.basket.items.values.elementAt(index);
                   double itemPrice = widget.basket.prices[itemName]!;
                   double totalPrice = itemQuantity * itemPrice;
 
@@ -64,7 +55,8 @@ class _BasketScreenState extends State<BasketScreen> {
                         children: [
                           Text(
                             itemName,
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 4),
                           Text('Miktar: $itemQuantity'),
@@ -93,7 +85,7 @@ class _BasketScreenState extends State<BasketScreen> {
                                 icon: Icon(Icons.delete, color: Colors.grey),
                                 onPressed: () {
                                   setState(() {
-                                    widget.basket.removeItem(itemName);
+                                    widget.basket.removeAllItem(itemName);
                                   });
                                 },
                               ),
@@ -114,10 +106,20 @@ class _BasketScreenState extends State<BasketScreen> {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ActiveOrderScreen()),
-                );
+                if (widget.basket.getTotalPrice() > 0) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ActiveOrderScreen()),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Sepetinizde ürün yok.'),
+                      duration: Duration(seconds: 1),
+                    ),
+                  );
+                }
               },
               child: Text('Sipariş Ver', style: TextStyle(fontSize: 18)),
               style: ElevatedButton.styleFrom(

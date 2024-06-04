@@ -8,8 +8,8 @@ class ActiveOrderScreen extends StatelessWidget {
         title: Text('Aktif Sipariş', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
         backgroundColor: Color.fromARGB(255, 211, 123, 245),
       ),
-      body: Center(
-        child: Text(
+      body:const Center(
+         child:  Text(
           'Siparişiniz alındı!',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),

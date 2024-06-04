@@ -71,7 +71,7 @@ class Desserts extends StatelessWidget {
               child: Text(
                 name,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
                 ),
